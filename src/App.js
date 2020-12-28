@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import ControlPresupuesto from "./components/ControlPresupuesto";
 import Formulario from "./components/Formulario";
+import Listado from "./components/Listado";
 import Pregunta from "./components/Pregunta";
 
 const App = () => {
@@ -7,6 +9,12 @@ const App = () => {
   const [presupuesto, guardarPresupuesto] = useState(0);
   const [restante, guardarRestante] = useState(0);
   const [mostrarpregunta, actualizarPregunta] = useState(true);
+  const [gastos, guardarGastos] = useState([]);
+
+  // Fn cuando agregamos un nuevo gasto
+  const agregarNuevoGasto = (gasto) => {
+    guardarGastos([...gastos, gasto]);
+  };
 
   return (
     <div className="container">
@@ -23,9 +31,16 @@ const App = () => {
           ) : (
             <div className="row">
               <div className="one-half column">
-                <Formulario />
+                <Formulario agregarNuevoGasto={agregarNuevoGasto} />
               </div>
-              <div className="one-half column">2</div>
+              <div className="one-half column">
+                <Listado gastos={gastos} />
+
+                <ControlPresupuesto
+                  presupuesto={presupuesto}
+                  restante={restante}
+                />
+              </div>
             </div>
           )}
         </div>
